@@ -15,7 +15,7 @@ All contributions must comply with the project's standards:
 Every example / source file must refer to LICENSE
 Every example / source file must include correct copyright notice
 
-Depending on your language used it is expected you follow one of two syling guides
+Depending on your language used it is expected you follow one of two styling guides
 - Python use [PEP8](https://peps.python.org/pep-0008/) Standard
 - C++ use [clang](https://clang.llvm.org/docs/ClangFormat.html) formatting 
 
@@ -66,3 +66,36 @@ How to get your contributions merged smoothly and quickly.
 
 - Exceptions to the rules can be made if there's a compelling reason for doing so.
 
+
+## Building 
+In order to build and develop this package users can use the LUCI provided development docker image that comes pre installed with ROS2 and all supporting dev tools. To get this image run `docker run -d -it -p 8765:8765 luci.jfrog.io/ros2-sdk-docker-local/luci-sdk-development-image:latest`. This will get the lates development image provided from the LUCI artifactory. This image is updated at minimum every major release of the SDK. 
+
+Once running the development image run the following steps inside of the container to build the third_party package.
+
+1. `git clone git@github.com:lucimobility/luci-ros2-third-party.git`
+2. `cd luci-ros2-third-party`
+3. `colcon build`
+4. `source install/setup.bash`
+
+At this point any node should be available to your system through a `ros2 run` command.
+
+<b>NOTE: Theres is also a provided `build-package.sh` script that can be used to build the ROS package and an installable `.deb` file. This is what the LUCI team uses for its automatic deployments.</b>
+
+<b>Please be aware that the `deploy-package.sh` and the `sign-package.sh` scripts are NOT to be ran by anyone outside of the LUCI company. They will fail if ran by anyone without proper credentials and are only for the automated release process used by LUCI. </b>
+
+
+## Releasing new version (FOR LUCI EMPLOYEES ONLY) ##
+When a new version of this package is ready to be released there are a couple steps to follow. It is important to note that most of the process is automated for convenience and the process should be just a couple of button clicks. 
+
+### Steps ### 
+1. Update release version
+    - This should be its own separate PR and should only update the package.xml `<version> </version>` tag. 
+    - LUCI follows [semver](https://semver.org/) style versioning so MAJOR.MINOR.PATCH versions are expected.
+    - It is okay to not put out versions until multiple changes have happened to the code. 
+2. Once the version increment is merged you simply need to create an official release in github. Make sure you make the release version the same as what is now in `package.xml`. We have chosen to keep github release and package version in sync.
+    - This should trigger an action to auto run called `Create and Sign Package` which you can monitor in the github actions panel. This should grab the released code, build it, make an installable .deb file, gdb sign it and push it to jrog artifactory.
+
+If everything went smoothly congratulations the new package will be released and publicly distributable. 
+
+
+<b>NOTE: Once a PR is merged into the `main` branch the docs site in the `next` version will update with it that evening.</b>
