@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="3">
   <name>luci_third_party</name>
-  <version>0.1.0</version>
+  <version>1.0.0</version>
   <description>A packages to host all opensource contributions</description>
 
   <maintainer email="christian@luci.com">christian</maintainer>
