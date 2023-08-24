@@ -1,17 +1,20 @@
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, ExecuteProcess
-from launch.substitutions import PathJoinSubstitution
-from launch_ros.substitutions import FindPackageShare
-from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.actions import ExecuteProcess, DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 
 def generate_launch_description():
 
+    ip = LaunchConfiguration('ip')
+    ip_launch_arg = DeclareLaunchArgument('ip')
+
     return LaunchDescription([
 
+        ip_launch_arg,
+
         ExecuteProcess(
-            cmd=['ros2', 'run', 'luci_grpc_interface', 'grpc_interface_node', '-a', '192.168.8.203'],
+            cmd=['ros2', 'run', 'luci_grpc_interface', 'grpc_interface_node', '-a', ip],
             output='screen',
             name='grpc_node'
         ),
