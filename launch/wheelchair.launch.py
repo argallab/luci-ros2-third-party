@@ -23,4 +23,6 @@ def generate_launch_description():
             executable='quickie_500m_tf_node',
             name='quickie_500m_tf_node'
         ),
+
+        
     ])  
