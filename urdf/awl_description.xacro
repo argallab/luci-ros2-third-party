@@ -58,14 +58,6 @@
   </joint>
 
   <link name="right_main_wheel">
-    <!-- <visual>
-      <geometry>
-        <cylinder length="${main_wheel_length}" radius="${main_wheel_radius}"/>
-      </geometry>
-      <material name="blue">
-        <color rgba="0 0 0 1"/>
-      </material>
-    </visual> -->
     <visual>
       <geometry>
         <mesh filename="package://awl_description/meshes/main_wheel.dae" scale="1 1 1" />
