@@ -7,10 +7,9 @@ from launch_ros.actions import Node
 def generate_launch_description():
 
     ip = LaunchConfiguration('ip')
-    ip_launch_arg = DeclareLaunchArgument('ip')
+    ip_launch_arg = DeclareLaunchArgument('ip', description='LUCI Chair IP address')
 
     return LaunchDescription([
-
         ip_launch_arg,
 
         ExecuteProcess(
@@ -24,4 +23,6 @@ def generate_launch_description():
             executable='quickie_500m_tf_node',
             name='quickie_500m_tf_node'
         ),
-    ])
+
+        
+    ])  
